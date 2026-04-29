@@ -51,7 +51,7 @@
   .watermark { position:absolute; top:0; left:0; right:0; bottom:0; pointer-events:none; z-index:1; overflow:hidden; }
   .watermark-grid { position:absolute; top:-200px; left:-200px; width:1400px; height:1600px; display:grid; grid-template-columns:repeat(3,1fr); gap:0; transform:rotate(-35deg); transform-origin:center; }
   .wm-cell { padding:60px 20px; text-align:center; }
-  .wm-text { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:700; color:rgba(208,40,30,0.07); letter-spacing:6px; text-transform:uppercase; white-space:nowrap; display:block; line-height:1; }
+  .wm-text { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:700; color:rgba(201,168,76,0.10); letter-spacing:6px; text-transform:uppercase; white-space:nowrap; display:block; line-height:1; }
   .wm-sub { font-family:'Barlow Condensed',sans-serif; font-size:11px; color:rgba(201,168,76,0.07); letter-spacing:3px; text-transform:uppercase; display:block; margin-top:4px; }
 
   /* PAGE CONTENT */
@@ -147,11 +147,123 @@
     #pdf-document { display:block !important; }
     .pdf-page { box-shadow:none !important; margin:0 !important; page-break-after:always; width:100% !important; }
     .generate-btn, .print-btn { display:none !important; }
-    .wm-text { color:rgba(208,40,30,0.08) !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .wm-text { color:rgba(201,168,76,0.10) !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     .wm-sub { color:rgba(201,168,76,0.06) !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     .page-header, .page-footer, .panel-header, .risk-badge, .client-hero,
     .milestone-card, .leverage-card, .profile-card-header, .accent-bar, .watermark { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   }
+
+  /* ── MOBILE RESPONSIVE ─────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .app { flex-direction: column; }
+    
+    .sidebar {
+      width: 100%;
+      min-width: unset;
+      height: auto;
+      position: relative;
+      top: 0;
+    }
+    
+    .preview-area {
+      padding: 16px;
+      background: #E8E8E8;
+    }
+    
+    .pdf-page {
+      width: 100%;
+      min-height: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    
+    .page-header {
+      padding: 12px 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .doc-logo-text { font-size: 20px; }
+    .page-title-main { font-size: 12px; letter-spacing: 2px; }
+    .page-confidential { font-size: 8px; }
+
+    .client-hero {
+      padding: 14px 16px;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .capital-display { text-align: left; }
+    .capital-amount { font-size: 30px; }
+    .client-name-display { font-size: 22px; }
+
+    .main-grid {
+      padding: 14px 16px;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .milestones, .profile-section, .leverage-section, .notes-section {
+      padding: 0 16px 16px;
+    }
+
+    .milestone-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+
+    .milestone-grid .milestone-card:last-child {
+      grid-column: span 2;
+    }
+
+    .profile-grid { grid-template-columns: 1fr; }
+    .leverage-grid { grid-template-columns: 1fr; gap: 6px; }
+
+    .page-footer {
+      padding: 10px 16px;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .footer-left { font-size: 8px; }
+
+    .generate-btn, .print-btn {
+      margin: 12px 16px 8px;
+      width: calc(100% - 32px);
+    }
+
+    .field-row { grid-template-columns: 1fr 1fr; }
+    
+    /* Mobile PDF button - replaces print */
+    .mobile-save-btn {
+      display: block !important;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .mobile-save-btn { display: none !important; }
+  }
+
+  .mobile-save-btn {
+    display: none;
+    margin: 0 16px 16px;
+    width: calc(100% - 32px);
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .mobile-save-btn:hover { background: var(--gold); color: var(--dark); }
+
 </style>
 </head>
 <body>
@@ -199,6 +311,7 @@
 
     <button class="generate-btn" onclick="generatePlan()">Generate Investment Plan</button>
     <button class="print-btn" id="printBtn" onclick="window.print()">⬇ Save / Print PDF</button>
+    <button class="mobile-save-btn" id="mobileSaveBtn" onclick="mobileSave()">⬇ Save as PDF</button>
   </div>
 
   <!-- PREVIEW -->
@@ -206,7 +319,9 @@
     <div class="placeholder-msg" id="placeholderMsg">
       <div class="icon">📋</div>
       <p>Enter client details and generate plan</p>
+      <p id="mobileHint" style="font-size:10px;color:#aaa;margin-top:8px;display:none;">On mobile: fill in the form above, hit Generate, then use Save as PDF</p>
     </div>
+    <script>if(window.innerWidth <= 768) document.getElementById('mobileHint').style.display='block';</script>
     <div id="pdf-document"></div>
   </div>
 </div>
@@ -353,7 +468,7 @@ function generatePlan(){
             return `<div class="profile-card">
               <div class="profile-card-header ${pr.headerClass}">
                 <div class="profile-dot ${pr.dotClass}"></div>
-                <span class="profile-name">${pr.label} · <span style="font-size:9px;letter-spacing:1px;opacity:0.7;">FXGLOBE</span></span>
+                <span class="profile-name">${pr.label} · <span style="font-size:9px;letter-spacing:1px;color:#C9A84C;opacity:1;">FXGLOBE</span></span>
                 <span class="profile-rate">${pr.rateLabel}</span>
               </div>
               <div class="profile-card-body">
@@ -383,7 +498,7 @@ function generatePlan(){
 
       <div class="page-footer">
         <div class="footer-left">FOR PROFESSIONAL USE ONLY · ILLUSTRATIVE PROJECTIONS · PAST PERFORMANCE DOES NOT GUARANTEE FUTURE RESULTS · This document has been prepared by FXGlobe for the exclusive use of the named recipient. Unauthorised reproduction or use is strictly prohibited. © FXGlobe ${new Date().getFullYear()} · All Rights Reserved · fxglobe.com</div>
-        <div class="footer-brand"><span class="fx">FX</span><span class="globe">GLOBE</span><span class="url">fxglobe.com</span></div>
+        <div class="footer-brand"><span class="fx" style="color:#C9A84C;">FX</span><span class="globe" style="color:#C9A84C;">GLOBE</span><span class="url">fxglobe.com</span></div>
       </div>
 
     </div>
@@ -393,7 +508,18 @@ function generatePlan(){
   document.getElementById('pdf-document').innerHTML=html;
   document.getElementById('pdf-document').style.display='block';
   document.getElementById('printBtn').style.display='block';
+  document.getElementById('mobileSaveBtn').style.display='block';
 }
+
+function mobileSave() {
+  // On mobile, trigger print which gives Save as PDF option
+  // Also scroll to top of document first
+  document.getElementById('pdf-document').scrollIntoView({behavior: 'smooth'});
+  setTimeout(function() {
+    window.print();
+  }, 500);
+}
+
 </script>
 </body>
 </html>
