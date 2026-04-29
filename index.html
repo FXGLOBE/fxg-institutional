@@ -51,7 +51,7 @@
   .watermark { position:absolute; top:0; left:0; right:0; bottom:0; pointer-events:none; z-index:1; overflow:hidden; }
   .watermark-grid { position:absolute; top:-200px; left:-200px; width:1400px; height:1600px; display:grid; grid-template-columns:repeat(3,1fr); gap:0; transform:rotate(-35deg); transform-origin:center; }
   .wm-cell { padding:60px 20px; text-align:center; }
-  .wm-text { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:700; color:rgba(208,40,30,0.07); letter-spacing:6px; text-transform:uppercase; white-space:nowrap; display:block; line-height:1; }
+  .wm-text { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:700; color:rgba(201,168,76,0.10); letter-spacing:6px; text-transform:uppercase; white-space:nowrap; display:block; line-height:1; }
   .wm-sub { font-family:'Barlow Condensed',sans-serif; font-size:11px; color:rgba(201,168,76,0.07); letter-spacing:3px; text-transform:uppercase; display:block; margin-top:4px; }
 
   /* PAGE CONTENT */
@@ -147,7 +147,7 @@
     #pdf-document { display:block !important; }
     .pdf-page { box-shadow:none !important; margin:0 !important; page-break-after:always; width:100% !important; }
     .generate-btn, .print-btn { display:none !important; }
-    .wm-text { color:rgba(208,40,30,0.08) !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .wm-text { color:rgba(201,168,76,0.10) !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     .wm-sub { color:rgba(201,168,76,0.06) !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     .page-header, .page-footer, .panel-header, .risk-badge, .client-hero,
     .milestone-card, .leverage-card, .profile-card-header, .accent-bar, .watermark { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
@@ -353,7 +353,7 @@ function generatePlan(){
             return `<div class="profile-card">
               <div class="profile-card-header ${pr.headerClass}">
                 <div class="profile-dot ${pr.dotClass}"></div>
-                <span class="profile-name">${pr.label} · <span style="font-size:9px;letter-spacing:1px;opacity:0.7;">FXGLOBE</span></span>
+                <span class="profile-name">${pr.label} · <span style="font-size:9px;letter-spacing:1px;color:#C9A84C;opacity:1;">FXGLOBE</span></span>
                 <span class="profile-rate">${pr.rateLabel}</span>
               </div>
               <div class="profile-card-body">
@@ -383,7 +383,7 @@ function generatePlan(){
 
       <div class="page-footer">
         <div class="footer-left">FOR PROFESSIONAL USE ONLY · ILLUSTRATIVE PROJECTIONS · PAST PERFORMANCE DOES NOT GUARANTEE FUTURE RESULTS · This document has been prepared by FXGlobe for the exclusive use of the named recipient. Unauthorised reproduction or use is strictly prohibited. © FXGlobe ${new Date().getFullYear()} · All Rights Reserved · fxglobe.com</div>
-        <div class="footer-brand"><span class="fx">FX</span><span class="globe">GLOBE</span><span class="url">fxglobe.com</span></div>
+        <div class="footer-brand"><span class="fx" style="color:#C9A84C;">FX</span><span class="globe" style="color:#C9A84C;">GLOBE</span><span class="url">fxglobe.com</span></div>
       </div>
 
     </div>
