@@ -527,7 +527,7 @@ function generatePlan(){
     + '\uD83C\uDFAF *Year 1 Balance (est.):* ' + fmt(p.yr1) + '\n'
     + '\u23F1 *Time:* ' + timeStr + '\n\n'
     + '_fxglobe.com \u00B7 Internal Use Only_';
-  fetch('https://api.telegram.org/bot8704392647:AAE4hgE-Cy9Ymb2ukYnUQOUg36Nk-VKh7vtTk/sendMessage', {
+  fetch('https://eovn7xv0z0xwn88.m.pipedream.net', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({chat_id: '2127265910', text: msg, parse_mode: 'Markdown'})
