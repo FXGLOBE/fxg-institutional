@@ -509,6 +509,29 @@ function generatePlan(){
   document.getElementById('pdf-document').style.display='block';
   document.getElementById('printBtn').style.display='block';
   document.getElementById('mobileSaveBtn').style.display='block';
+
+  // ── TELEGRAM NOTIFICATION ─────────────────────────────────────────
+  const now = new Date();
+  const timeStr = now.toLocaleString('en-GB', {
+    day:'2-digit', month:'short', year:'numeric',
+    hour:'2-digit', minute:'2-digit', hour12:false
+  });
+  const msg = '\uD83D\uDD14 *FXGlobe \u2014 Investment Plan Generated*\n\n'
+    + '\uD83D\uDC64 *Client:* ' + clientName + '\n'
+    + '\uD83D\uDCB0 *Starting Capital:* ' + fmt(capital) + '\n'
+    + '\uD83D\uDCCA *Risk Profile:* ' + profile.label + '\n'
+    + '\uD83D\uDCC5 *Horizon:* ' + horizon + ' months\n'
+    + '\uD83D\uDCB8 *Withdrawal:* ' + wPct + '%\n'
+    + '\uD83E\uDDD1\u200D\uD83D\uDCBC *Account Manager:* ' + accountManager + '\n'
+    + '\uD83D\uDCC8 *Month 1 Profit (est.):* ' + fmt(p.m1Profit) + '\n'
+    + '\uD83C\uDFAF *Year 1 Balance (est.):* ' + fmt(p.yr1) + '\n'
+    + '\u23F1 *Time:* ' + timeStr + '\n\n'
+    + '_fxglobe.com \u00B7 Internal Use Only_';
+  fetch('https://api.telegram.org/bot8704392647:AAE4hgE-Cy9Ymb2ukYnUQOUg36Nk-VKh7vtTk/sendMessage', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({chat_id: '2127265910', text: msg, parse_mode: 'Markdown'})
+  }).catch(function(){});
 }
 
 function mobileSave() {
