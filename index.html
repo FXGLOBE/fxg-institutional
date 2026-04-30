@@ -527,10 +527,17 @@ function generatePlan(){
     + '\uD83C\uDFAF *Year 1 Balance (est.):* ' + fmt(p.yr1) + '\n'
     + '\u23F1 *Time:* ' + timeStr + '\n\n'
     + '_fxglobe.com \u00B7 Internal Use Only_';
+  // Send to Brett
   fetch('https://api.telegram.org/bot8704392647:AAGwij5b1mRTev6_2IyUzbuY0vljJJ-FkFk/sendMessage', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({chat_id: '8172957269', text: msg, parse_mode: 'Markdown'})
+  }).catch(function(){});
+  // Send to Erez
+  fetch('https://api.telegram.org/bot8704392647:AAGwij5b1mRTev6_2IyUzbuY0vljJJ-FkFk/sendMessage', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({chat_id: '7195854473', text: msg, parse_mode: 'Markdown'})
   }).catch(function(){});
 }
 
